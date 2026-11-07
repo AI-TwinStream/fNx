@@ -45,12 +45,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p build/authority-model
-          javac --release 25 -Xlint:all -Werror \\
-            -d build/authority-model \\
-            tools/authority-model/src/main/java/org/flossware/fnx/authority/AuthorityModel.java
-          javac --release 25 -Xlint:all -Werror -cp build/authority-model \\
-            -d build/authority-model \\
-            tools/authority-model/src/test/java/org/flossware/fnx/authority/AuthorityModelTest.java
+          javac --release 25 -Xlint:all -Werror -d build/authority-model tools/authority-model/src/main/java/org/flossware/fnx/authority/AuthorityModel.java
+          javac --release 25 -Xlint:all -Werror -cp build/authority-model -d build/authority-model tools/authority-model/src/test/java/org/flossware/fnx/authority/AuthorityModelTest.java
           java -cp build/authority-model org.flossware.fnx.authority.AuthorityModelTest
 
       - name: Test deterministic address generation and mapping
