@@ -1,6 +1,6 @@
 # fNx Roadmap
 
-**Date:** 2026-11-06  
+**Date:** 2026-11-07  
 **Status:** Architecture and research roadmap; priorities evolve as contracts are reviewed
 
 fNx is the architecture family. N is the native architectural width in bits. 128-bit research profile is one member and the current focus of the executable scheduler/fabric research. Family-wide decisions must not be inferred from 128-bit research profile-only simulation results.
@@ -49,7 +49,8 @@ fNx is the architecture family. N is the native architectural width in bits. 128
 - [ ] Define normative privilege, protection, traps, interrupts, and reset state.
 - [ ] Define ABI, calling convention, stack, object format, relocations, and system interface.
 - [x] Define layered conformance domains, implementation-profile reporting, requirement traceability, and reference-model strategy.
-- [x] Establish a first-pass M1 requirements traceability matrix with stable IDs, verification evidence targets, and cross-contract invariants; executable tests remain pending.
+- [x] Establish a first-pass M1 requirements traceability matrix with stable IDs, verification evidence targets, and cross-contract invariants; full executable conformance remains pending.
+- [x] Add a Java 25 authority semantic prototype with deterministic tests for explicit grants, scope, requester binding, revocation, and stale resource generations; platform enforcement remains unimplemented.
 - [ ] Build reference interpreter, assembler, disassembler, golden vectors, and conformance suite.
 - [ ] Prototype GCC and LLVM backends; evaluate Rust, Go, and OpenJDK paths.
 
