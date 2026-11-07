@@ -151,16 +151,16 @@ A platform reset must not imply that unrelated backplanes or CPU units are reset
 
 ## 9. Privilege and protection prerequisites
 
-The exception model depends on a privilege model that defines:
-- Architectural privilege levels or modes.
-- Entry and return authority.
-- Protected control registers.
-- Translation and memory-protection authority.
+The exception model depends on a privilege and authority model that distinguishes CPU execution privilege from workspace ownership, delegated capabilities, debug authorization, and FCP platform-management authority. It must define:
+- Protected operation classes and execution-privilege checks.
+- Entry and return authority, including protected return state.
+- Translation and memory-protection administration.
 - Interrupt-controller configuration authority.
-- Debug access and authorization.
-- FCP/host management authority boundaries.
+- Debug authorization independent of ordinary supervisor privilege.
+- FCP/host management boundaries and arbitration.
+- Revocation and reset behavior for authority associated with a context or resource.
 
-The number and encoding of privilege levels remain open. The architecture should specify authority and transitions before assigning numeric mode encodings.
+The number and encoding of privilege levels remain open. The architecture should specify authority and transitions before assigning numeric mode encodings. See the [privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md).
 
 ## 10. Conformance requirements
 
@@ -202,4 +202,5 @@ A reference implementation and conformance suite must test:
 - [fNx workspace protection and shared state](workspace-protection-and-shared-state-0.2.md)
 - [fNx address-space and memory-model proposal](address-space-and-memory-model-proposal-0.1.md)
 - [fNx control processor and management plane](fnx-control-and-management-plane-0.1.md)
+- [fNx privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md)
 - [fNx roadmap](../roadmap.md)
