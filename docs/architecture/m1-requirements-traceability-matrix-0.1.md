@@ -69,7 +69,7 @@ No row in this initial matrix should be read as proof of implementation or confo
 | MEM-007 | Memory attributes and device/I/O behavior are explicit and cannot silently degrade into ordinary cacheable memory. | address/memory §5 | Attribute conformance and device-ordering tests | Open |
 | MEM-008 | The memory model defines permitted observations across threads, workspaces, CPU widths, DMA, shared registers, and I/O. | address/memory §6 | Published executable litmus suite with golden outcomes | Open |
 | MEM-009 | Atomicity, ordering, supported widths, alignment, scope, and progress are separate declared properties. | address/memory §7 | Atomic capability matrix and concurrency tests | Open |
-| MEM-010 | Coherence or explicit ownership/maintenance rules define CPU, DMA, and device visibility. | address/memory §8 | CPU-to-CPU and CPU-to-DMA visibility tests | Open |
+| MEM-010 | Coherence or explicit ownership/maintenance rules define CPU, DMA, and device visibility; DMA access is bound to requester identity and delegated mappings. | address/memory §§3.2, 8; privilege/authority §6 | CPU-to-CPU and CPU-to-DMA visibility tests; requester-spoofing and unauthorized-range tests | Open |
 | MEM-011 | Mixed-width members share a defined byte representation and explicit transfer lengths; native width does not imply remote atomic width. | address/memory §9; fabric §11 | Cross-width representation and unsupported-atomic tests | Open |
 
 ## 5. Exception, interrupt, and reset requirements
@@ -98,7 +98,7 @@ No row in this initial matrix should be read as proof of implementation or confo
 | FAB-006 | Flow control and resource exhaustion cannot create prohibited deadlock or silent transaction loss. | fabric §9 | Bounded-resource stress and formal deadlock properties | Open |
 | FAB-007 | Errors are attributable; retry behavior is safe for side-effecting operations and cannot duplicate effects. | fabric §10 | Integrity, timeout, retry, and duplicate-side-effect injection | Open |
 | FAB-008 | Endpoint discovery, route changes, endpoint removal, and partial hierarchy failure have defined behavior. | fabric §§3, 12 | Topology mutation and outstanding-transaction tests | Open |
-| FAB-009 | Protection and relevant memory attributes are preserved across all fabric hierarchy levels. | fabric §§6, 10, 13 | Adversarial bridge/endpoint authorization tests | Open |
+| FAB-009 | Protection, requester identity, delegated authority, and relevant memory attributes are preserved across all fabric hierarchy levels. | fabric §§6, 10, 13; privilege/authority §6 | Adversarial bridge/endpoint authorization and requester-spoofing tests | Open |
 | FAB-010 | Physical link, packet layout, and routing mechanisms remain implementation choices unless separately standardized. | fabric §§2, 15 | Specification review; implementation profile disclosure | Proposal |
 
 ## 7. FCP and control-plane requirements
