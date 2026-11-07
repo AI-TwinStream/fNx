@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - "tools/scheduler-sim/**"
+      - "tools/authority-model/**"
       - ".github/workflows/scheduler-simulator.yml"
 
 permissions:
