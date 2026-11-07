@@ -111,10 +111,10 @@ No row in this initial matrix should be read as proof of implementation or confo
 | CTRL-004 | FCP failure, main-CPU failure, reset, recovery, and partial hierarchy failure have defined observable reporting. | FCP §§4, 7, 9 | Fault-injection matrix across power/reset domains | Open |
 | CTRL-005 | Management operations are authenticated, auditable, and cannot bypass CPU privilege, memory protection, or device access controls. | FCP §8 | Threat-model review and privilege-bypass negative tests | Open |
 | CTRL-006 | FCP firmware trust, update, rollback, and recovery authority are specified before claiming a secure management plane. | FCP §§4, 8–9 | Secure-boot/update protocol tests and recovery tests | Open |
-| CTRL-007 | CPU execution privilege, resource ownership, delegated capabilities, debug authorization, and FCP management authority are distinct and non-interchangeable. | privilege/authority §§2–3 | Authority-domain model tests and unauthorized cross-domain operation tests | Proposal |
-| CTRL-008 | Every protected operation has an explicit authorization point, target scope, and defined denial result. | privilege/authority §4 | Positive/negative authorization matrix across CPU, memory, DMA, fabric, debug, and FCP | Open |
-| CTRL-009 | Delegated authority is bounded, non-forgeable, generation-safe, and revocable; revocation defines treatment of in-flight operations. | privilege/authority §§3.3, 7 | Forged/stale/revoked capability tests and in-flight revocation fault injection | Open |
-| CTRL-010 | Debug and FCP management access cannot implicitly bypass CPU memory protection, workspace isolation, or DMA protection. | privilege/authority §§3.4–3.5, 6 | Debug/FCP privilege-bypass negative tests | Proposal |
+| CTRL-007 | CPU execution privilege, resource ownership, delegated capabilities, debug authorization, and FCP management authority are distinct and non-interchangeable. | privilege/authority §§2–3 | Java semantic checks in `tools/authority-model`; platform-level enforcement remains unimplemented | Proposal |
+| CTRL-008 | Every protected operation has an explicit authorization point, target scope, and defined denial result. | privilege/authority §4 | Java checks for operation, holder, resource, and range; full authorization matrix remains pending | Open |
+| CTRL-009 | Delegated authority is bounded, non-forgeable, generation-safe, and revocable; revocation defines treatment of in-flight operations. | privilege/authority §§3.3, 7 | Java checks for bounded, holder-bound, stale-generation, and revoked grants; in-flight revocation semantics remain open | Open |
+| CTRL-010 | Debug and FCP management access cannot implicitly bypass CPU memory protection, workspace isolation, or DMA protection. | privilege/authority §§3.4–3.5, 6 | Java checks for debug operation separation and FCP resource scoping; hardware/platform bypass tests remain pending | Proposal |
 
 ## 8. Conformance and evidence requirements
 
@@ -128,6 +128,7 @@ No row in this initial matrix should be read as proof of implementation or confo
 | CONF-006 | Cross-width tests exercise at least two distinct N values and explicit capability negotiation. | conformance strategy §7 | Mixed-width reference-model test suite | Test pending |
 | CONF-007 | Security conformance covers isolation, stale identities, debug authority, DMA, management forgery, and teardown races. | conformance strategy §8 | Adversarial security test suite | Test pending |
 | CONF-008 | Simulation-only results do not claim hardware conformance; failed and skipped tests remain visible. | conformance strategy §10 | CI evidence policy and report validation | Proposal |
+| CONF-009 | Executable semantic prototypes identify the proposal assumptions they encode and are not presented as hardware conformance evidence. | conformance strategy §§4–5; authority model README | Review of model scope, test output, and profile/evidence labeling | Proposal |
 
 ## 9. Cross-contract invariants requiring explicit reconciliation
 
