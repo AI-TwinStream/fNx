@@ -1,0 +1,38 @@
+name: Authority reference model
+
+on:
+  push:
+    branches: [main, 'experiment/**', 'design/**']
+    paths:
+      - "tools/authority-model/**"
+      - ".github/workflows/authority-model.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "tools/authority-model/**"
+      - ".github/workflows/authority-model.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  java-25:
+    name: Compile and test (JDK 25)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Compile and run authority model tests
+        run: |
+          set -euo pipefail
+          mkdir -p build/authority-model
+          javac --release 25 -Xlint:all -Werror -d build/authority-model tools/authority-model/src/main/java/org/flossware/fnx/authority/AuthorityModel.java
+          javac --release 25 -Xlint:all -Werror -cp build/authority-model -d build/authority-model tools/authority-model/src/test/java/org/flossware/fnx/authority/AuthorityModelTest.java
+          java -cp build/authority-model org.flossware.fnx.authority.AuthorityModelTest
