@@ -98,6 +98,7 @@ public final class AuthorityModel {
      */
     public static final class Capability {
         private final long id;
+        private final String issuerId;
         private final String holderId;
         private final String resourceId;
         private final long resourceGeneration;
@@ -105,9 +106,11 @@ public final class AuthorityModel {
         private final long rangeStart;
         private final long rangeEnd;
 
-        private Capability(long id, String holderId, Resource resource,
-                Set<Operation> operations, long rangeStart, long rangeEnd) {
+        private Capability(long id, String issuerId, String holderId,
+                Resource resource, Set<Operation> operations,
+                long rangeStart, long rangeEnd) {
             this.id = id;
+            this.issuerId = issuerId;
             this.holderId = holderId;
             this.resourceId = resource.id();
             this.resourceGeneration = resource.generation();
@@ -171,7 +174,7 @@ public final class AuthorityModel {
             throw new IllegalArgumentException("capability range is outside the resource");
         }
         Capability capability = new Capability(nextCapabilityId++,
-                holder.id(), resource, operations, rangeStart, rangeEnd);
+                issuer.id(), holder.id(), resource, operations, rangeStart, rangeEnd);
         return capability;
     }
 
