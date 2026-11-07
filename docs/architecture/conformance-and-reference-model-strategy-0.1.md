@@ -37,7 +37,7 @@ Covers:
 - Context save/restore and residency equivalence.
 - Migration, if supported.
 - Interrupt delivery to blocked and nonresident contexts.
-- Workspace isolation and debug authority.
+- Workspace isolation, delegated authority, debug authorization, and FCP management boundaries.
 
 A profile may expose fewer contexts or register resources than another implementation, but must report limits and preserve all semantics for admitted resources.
 
@@ -66,6 +66,7 @@ Covers:
 - Error reporting, integrity, and retry safety.
 - Hierarchical routing and fault containment.
 - FCP control-plane authority and management behavior.
+- Privilege-domain separation, capability delegation/revocation, debug authorization, and management authorization.
 
 ### 2.5 Software-interface conformance
 
@@ -108,7 +109,9 @@ These are different facts. A temporary shortage of resident contexts must not be
 
 Every normative requirement should have:
 
-The working cross-document mapping is maintained in [M1 requirements traceability matrix](m1-requirements-traceability-matrix-0.1.md). Its IDs are provisional traceability identifiers, not a claim that the linked proposal text has been ratified.
+The working cross-document mapping is maintained in the [M1 requirements traceability matrix](m1-requirements-traceability-matrix-0.1.md). Its IDs are provisional traceability identifiers, not a claim that the linked proposal text has been ratified.
+
+Every normative requirement should have:
 1. A stable requirement identifier.
 2. A specification section and revision.
 3. A classification: mandatory, optional capability, or implementation-defined with required discovery.
