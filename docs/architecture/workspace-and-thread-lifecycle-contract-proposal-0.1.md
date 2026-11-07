@@ -22,7 +22,7 @@ A workspace is the ownership domain for:
 - Resource limits and capability state.
 - Explicitly granted access to memory, communication endpoints, and platform resources.
 
-A workspace has an identity, lifecycle state, authority/ownership metadata, and discoverable limits.
+A workspace has an identity, lifecycle state, ownership metadata, explicit delegated-resource bindings, and discoverable limits. Ownership metadata records lifecycle responsibility; it does not itself grant unrestricted access or CPU execution privilege. Any access beyond ordinary workspace membership must be represented by an explicit policy or delegated capability.
 
 A workspace does not automatically own a unique virtual address space. Address-space ownership and workspace ownership are separate associations. The architecture must permit one workspace to use one address space and must define whether multiple workspaces may share an address space under explicit authorization.
 
@@ -116,7 +116,7 @@ The following baseline is recommended:
 | Workspace memory | Access according to translation and permissions | Access according to translation and permissions | Denied unless explicitly mapped/granted |
 | Communication endpoint | Authorized endpoint operations | Authorized endpoint operations | Explicitly granted endpoint only |
 
-Privileged software may have broader authority, but its access must be mediated by the privilege and protection model. Debugger access must be separately authorized and auditable where required.
+Privileged software may have broader authority, but its access must be mediated by the privilege and protection model. Workspace ownership does not bypass CPU privilege, address-space permissions, or device/DMA protection. Debugger access must be separately authorized and auditable where required. See the [privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md).
 
 No unprivileged instruction may forge a workspace or thread identity to access another domain's state.
 
@@ -195,7 +195,7 @@ Thread termination must define:
 - When the identity becomes invalid.
 - When physical resources can be reclaimed.
 
-Workspace teardown must not silently discard committed shared state before an explicit destruction or ownership-transfer boundary. It must revoke access before an identity or backing slot is reused.
+Workspace teardown must not silently discard committed shared state before an explicit destruction or ownership-transfer boundary. It must revoke membership and delegated access, resolve outstanding operations under defined rules, and invalidate associated capabilities before an identity or backing slot is reused.
 
 ## 9. Context residency, eviction, and migration
 
@@ -288,5 +288,6 @@ A reference model and tests must cover:
 - [fNx scheduling progress and interrupts](scheduling-progress-and-interrupts-0.2.md)
 - [fNx address-space and memory-model proposal](address-space-and-memory-model-proposal-0.1.md)
 - [fNx exception and interrupt model proposal](exception-and-interrupt-model-proposal-0.1.md)
+- [fNx privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md)
 - [fNx logical data paths](data-paths-0.1.md)
 - [fNx roadmap](../roadmap.md)
