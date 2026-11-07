@@ -213,18 +213,22 @@ A hierarchy must not imply one global shared-memory coherence domain. Coherence 
 
 ## 13. Control and management plane
 
-The FCP and authorized host software use control transactions to discover and manage platform resources.
+The FCP and authorized host software use control transactions to discover and manage platform resources. CPU execution privilege, resource ownership, delegated capabilities, debug authorization, and FCP management authority are distinct domains; none is an implicit substitute for another.
+
+Every protected fabric transaction must identify or resolve a trustworthy requester principal, target resource, address domain, operation, and applicable delegated rights. Authorization-relevant identity and attributes must be preserved across bridges and hierarchy levels. A bridge must not replace the requester with its own identity in a way that widens authority, and a target must not rely on an unauthenticated upstream assertion.
 
 Control-plane operations must have:
-- Authenticated authority and explicit privilege.
+- Authenticated principal identity and explicit operation-specific authority.
 - Separate resource and ordering treatment from ordinary data traffic.
+- Defined ownership and arbitration for conflicting host/FCP commands.
 - Defined behavior when a managed endpoint is stopped or failed.
 - Auditable results for reset, power, firmware, and topology changes.
 - Protection against a data-plane requester forging management authority.
+- Defined revocation and in-flight transaction behavior.
 
 Telemetry may be lossy or coalesced only where the schema declares that behavior. Fault events that require recovery must have a reliable delivery or persistent-reporting mechanism.
 
-The FCP is not placed in the normal CPU load/store path.
+The FCP is not placed in the normal CPU load/store path. Its management authority does not itself grant application-memory, workspace, or arbitrary DMA access.
 
 ## 14. Conformance and verification
 
@@ -274,5 +278,6 @@ Formal protocol properties should cover transaction conservation, no duplicate s
 - [fNx workspace and thread lifecycle contract proposal](workspace-and-thread-lifecycle-contract-proposal-0.1.md)
 - [fNx logical data paths](data-paths-0.1.md)
 - [fNx control processor and management plane](fnx-control-and-management-plane-0.1.md)
+- [fNx privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md)
 - [Family and backplane compatibility](family-and-backplane-compatibility-0.1.md)
 - [fNx roadmap](../roadmap.md)
