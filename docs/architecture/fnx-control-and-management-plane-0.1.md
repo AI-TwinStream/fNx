@@ -105,7 +105,9 @@ A parent backplane or management controller should not need to share the native 
 
 Management operations can affect the entire platform. The standard must define authenticated authority, privilege separation, firmware trust, auditability, and recovery from compromised or unavailable components.
 
-The FCP must not become an undocumented bypass around CPU privilege, memory protection, or device access controls. Host OS management interfaces and FCP firmware interfaces need a clearly specified authority model.
+FCP authority is a distinct platform-management domain, not a higher CPU execution privilege. It grants only explicitly defined operations over identified platform components. It does not, by itself, grant access to application virtual memory, workspace state, or arbitrary device data. Any crash-dump, recovery-memory, or debug access must be separately authorized, scoped, revocable, and auditable.
+
+Host OS management interfaces and FCP firmware interfaces need a clearly specified authority model, including command ownership, arbitration, revocation, and behavior when either principal is compromised or unavailable. The FCP must not become an undocumented bypass around CPU privilege, memory protection, DMA protection, or device access controls.
 
 ## 9. Open decisions
 
@@ -121,6 +123,7 @@ The FCP must not become an undocumented bypass around CPU privilege, memory prot
 
 ## 10. Related specifications
 
+- [Privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md)
 - [Width-neutral fabric and backplane contract](width-neutral-fabric-and-backplane-contract-proposal-0.1.md)
 - [Workspace and thread lifecycle contract](workspace-and-thread-lifecycle-contract-proposal-0.1.md)
 
