@@ -64,6 +64,10 @@ public final class AuthorityModelTest {
                 190, 16, boundedRead), DenialReason.RANGE_NOT_GRANTED,
                 "memory grant is bounded");
 
+        expect(model.authorize(FCP, memory, Operation.READ_MEMORY,
+                100, 4, null), DenialReason.MISSING_CAPABILITY,
+                "FCP principal kind does not grant application-memory access");
+
         Capability fcpReset = model.issueCapability(ROOT, FCP, component,
                 EnumSet.of(Operation.RESET_COMPONENT), 0, 1);
         expectAllowed(model.authorize(FCP, component, Operation.RESET_COMPONENT,
