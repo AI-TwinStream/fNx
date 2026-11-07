@@ -14,7 +14,7 @@ Requirement identifiers use these domains:
 - `MEM`: address translation, memory, ordering, and atomics.
 - `EXC`: exceptions, traps, interrupts, and reset.
 - `FAB`: fabric, endpoints, and backplanes.
-- `CTRL`: FCP and platform management authority.
+- `CTRL`: FCP, platform management, and cross-domain authority.
 - `CONF`: conformance profiles, evidence, and verification process.
 
 A requirement's **proposal** status means the behavior is identified as necessary or recommended but has not been ratified. **Open** means a normative choice is still required. **Test pending** means the proposal identifies evidence, but no executable test is yet claimed.
@@ -84,7 +84,7 @@ No row in this initial matrix should be read as proof of implementation or confo
 | EXC-006 | Interrupts directed to blocked or nonresident contexts are retained and delivered without corrupting context state. | exception model §7; workspace/thread §§9, 12 | Eviction/restore interrupt stress tests | Open |
 | EXC-007 | Interrupt and reset behavior accounts for outstanding memory/fabric transactions and prevents duplicate side effects. | exception model §§5, 8; fabric §§7, 10 | In-flight transaction interruption and reset fault injection | Open |
 | EXC-008 | Reset scope is explicit and does not implicitly reset unrelated CPU units or backplanes. | exception model §8; fabric §12 | Partial-reset hierarchy tests | Open |
-| EXC-009 | Debug inspection and modification require explicit authorization and preserve defined architectural state. | exception model §§6–9; workspace/thread §5 | Unauthorized debug negative tests | Open |
+| EXC-009 | Debug inspection and modification require explicit authorization and preserve defined architectural state. | exception model §§6–9; workspace/thread §5; privilege/authority §3.4 | Unauthorized debug negative tests | Open |
 
 ## 6. Fabric and backplane requirements
 
@@ -111,6 +111,10 @@ No row in this initial matrix should be read as proof of implementation or confo
 | CTRL-004 | FCP failure, main-CPU failure, reset, recovery, and partial hierarchy failure have defined observable reporting. | FCP §§4, 7, 9 | Fault-injection matrix across power/reset domains | Open |
 | CTRL-005 | Management operations are authenticated, auditable, and cannot bypass CPU privilege, memory protection, or device access controls. | FCP §8 | Threat-model review and privilege-bypass negative tests | Open |
 | CTRL-006 | FCP firmware trust, update, rollback, and recovery authority are specified before claiming a secure management plane. | FCP §§4, 8–9 | Secure-boot/update protocol tests and recovery tests | Open |
+| CTRL-007 | CPU execution privilege, resource ownership, delegated capabilities, debug authorization, and FCP management authority are distinct and non-interchangeable. | privilege/authority §§2–3 | Authority-domain model tests and unauthorized cross-domain operation tests | Proposal |
+| CTRL-008 | Every protected operation has an explicit authorization point, target scope, and defined denial result. | privilege/authority §4 | Positive/negative authorization matrix across CPU, memory, DMA, fabric, debug, and FCP | Open |
+| CTRL-009 | Delegated authority is bounded, non-forgeable, generation-safe, and revocable; revocation defines treatment of in-flight operations. | privilege/authority §§3.3, 7 | Forged/stale/revoked capability tests and in-flight revocation fault injection | Open |
+| CTRL-010 | Debug and FCP management access cannot implicitly bypass CPU memory protection, workspace isolation, or DMA protection. | privilege/authority §§3.4–3.5, 6 | Debug/FCP privilege-bypass negative tests | Proposal |
 
 ## 8. Conformance and evidence requirements
 
@@ -132,7 +136,7 @@ These invariants span multiple proposals and must be resolved once, not independ
 1. **Atomicity boundary:** workspace shared-register visibility (CTX-005), memory atomic scope (MEM-009), and fabric atomic transactions (FAB-005) must use compatible scopes and completion semantics. A shared register must not be described as atomic at system scope unless the underlying implementation contract guarantees that scope.
 2. **Completion versus visibility:** fabric completion (FAB-003) must be reconciled with memory ordering and visibility (MEM-008, MEM-010). A completed transport response is not automatically a globally visible store unless the memory model says so.
 3. **Interrupts and in-flight work:** exception delivery (EXC-006, EXC-007), context teardown (CTX-009), and fabric retry/duplicate suppression (FAB-007) must agree on ownership of outstanding operations.
-4. **Authority separation:** CPU privilege, workspace protection, debug authority, host OS authority, and FCP control authority (EXC-009, CTRL-003, CTRL-005) must form one explicit authority model. FCP control privileges must not silently grant application-memory access.
+4. **Authority separation:** CPU privilege, workspace protection, delegated capabilities, debug authority, host OS authority, and FCP control authority (EXC-009, CTRL-003, CTRL-005, CTRL-007–CTRL-010) must form one explicit authority model. FCP control privileges must not silently grant application-memory access.
 5. **Address and fabric domains:** N-bit virtual addresses (MEM-001), physical address width (MEM-002), DMA protection (MEM-010), and fabric address domains (FAB-002, FAB-009) must be connected by explicit translation and authorization rules.
 6. **Identity lifecycle:** generation-safe workspace/thread identities (CTX-003), address-space identifiers (MEM-005), endpoint identities (FAB-008), and management inventory identifiers must define reuse and stale-reference behavior consistently.
 7. **Reset and teardown:** reset scope (EXC-008), workspace/thread teardown (CTX-006, CTX-009), and partial fabric hierarchy failure (FAB-008) must define which operations are drained, aborted, retried, or reported as indeterminate.
@@ -156,5 +160,6 @@ These invariants span multiple proposals and must be resolved once, not independ
 - [Workspace and thread lifecycle contract proposal](workspace-and-thread-lifecycle-contract-proposal-0.1.md)
 - [Width-neutral fabric and backplane contract proposal](width-neutral-fabric-and-backplane-contract-proposal-0.1.md)
 - [FCP control processor and management plane](fnx-control-and-management-plane-0.1.md)
+- [Privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md)
 - [Conformance and reference-model strategy](conformance-and-reference-model-strategy-0.1.md)
 - [fNx roadmap](../roadmap.md)
