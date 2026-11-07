@@ -83,7 +83,7 @@ Required properties:
 5. Changes to mappings have defined visibility and invalidation semantics.
 6. Translation state is isolated across protection domains.
 7. Translation faults and access faults are distinguishable where software needs different recovery behavior.
-8. DMA and other non-CPU agents use an explicitly defined translation/protection domain.
+8. DMA and other non-CPU agents use an explicitly defined translation/protection domain bound to a trustworthy requester identity. A device must not inherit the unrestricted memory rights of the CPU thread or supervisor that configured it; mapping authority, invalidation, fault attribution, reassignment, and revocation must be defined.
 
 Page tables, radix trees, inverted tables, segmentation, TLB organization, and hardware/software refill are implementation or ABI choices unless later made architectural.
 
@@ -274,4 +274,5 @@ The standard should publish executable litmus tests and golden outcomes before d
 - [fNx workspace protection and shared state](workspace-protection-and-shared-state-0.2.md)
 - [fNx context state and residency](context-state-and-residency-0.2.md)
 - [fNx control processor and management plane](fnx-control-and-management-plane-0.1.md)
+- [fNx privilege and authority model proposal](privilege-and-authority-model-proposal-0.1.md)
 - [fNx roadmap](../roadmap.md)
