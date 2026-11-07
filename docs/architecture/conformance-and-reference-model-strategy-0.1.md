@@ -188,6 +188,12 @@ A platform model should represent:
 
 The model should be parameterized by explicit implementation profiles rather than embedding the 128-bit research profile as a universal assumption.
 
+### 5.6 Authority semantic model
+
+A small executable authority model may be used to test the observable authorization rules independently of any selected hardware mechanism. It should cover principal and resource identity, explicit grants, operation and range scope, revocation, stale-generation rejection, and separation among CPU, device, debug, and FCP authority.
+
+The current Java prototype under `tools/authority-model` is proposal-level evidence only. It does not implement cryptographic authentication, protected capability storage, hardware isolation, production delegation policy, or in-flight revocation. Its passing tests must not be reported as platform or hardware conformance.
+
 ## 6. Test classes
 
 | Test class | Purpose |
